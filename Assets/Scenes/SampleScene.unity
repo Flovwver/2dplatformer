@@ -970,12 +970,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 0.05
-  _jumpForce: 400
+  _jumpHeight: 5
   _isGrounded: 1
+  _jumpTime: 0.5
   _groundDistance: 0.7
+  _coyoteTime: 0.2
+  _coyoteTimeCounter: 0
   _groundMask:
     serializedVersion: 2
     m_Bits: 128
+  _jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 5.7142806
+      outSlope: 5.7142806
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.04398587
+    - serializedVersion: 3
+      time: 0.4996574
+      value: 0.99760944
+      inSlope: 0.0046368456
+      outSlope: 0.0046368456
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33471397
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0000014
+      value: 0.007935006
+      inSlope: -5.587074
+      outSlope: -5.587074
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.051103044
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _jumpPressed: 0
 --- !u!1 &1431536962
 GameObject:
   m_ObjectHideFlags: 0
