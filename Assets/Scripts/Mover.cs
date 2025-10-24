@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
@@ -14,7 +13,7 @@ public class Mover : MonoBehaviour
     [SerializeField] private float _coyoteTimeCounter;
     [SerializeField] private LayerMask _groundMask;
     [SerializeField] private AnimationCurve _jumpCurve;
-    [SerializeField] private bool _isJump = false;
+    [SerializeField] private bool _isInJump = false;
 
     [SerializeField] private bool _jumpPressed;
 
@@ -29,9 +28,9 @@ public class Mover : MonoBehaviour
         else if (Keyboard.current.leftArrowKey.isPressed)
             Move(Vector2.left);
 
-        if (_jumpPressed && _jumpRoutine == null && _isJump == false)
+        if (_jumpPressed && _jumpRoutine == null && _isInJump == false)
         {
-            _isJump = true;
+            _isInJump = true;
             _jumpRoutine = StartCoroutine(Jump());
         }
     }
@@ -82,7 +81,7 @@ public class Mover : MonoBehaviour
         }
 
         _jumpRoutine = null;
-        _isJump = false;
+        _isInJump = false;
     }
 
     void OnDrawGizmosSelected()
