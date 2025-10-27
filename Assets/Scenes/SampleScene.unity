@@ -1007,7 +1007,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 15
-  _moveInput: 0
+  _moveHorizontalDirection: 0
+  _smooth: 20
 --- !u!114 &1329865446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,6 +1062,8 @@ MonoBehaviour:
   _jumpForce: 20
   _collisionChecker: {fileID: 1329865447}
   _isJumpStarted: 0
+  _jumpCount: 0
+  _maxJumpCount: 2
 --- !u!114 &1329865449
 MonoBehaviour:
   m_ObjectHideFlags: 0
