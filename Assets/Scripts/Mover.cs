@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,10 +6,13 @@ using UnityEngine.InputSystem;
 public class Mover : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _moveHorizontalDirection = 0f;
     [SerializeField] private float _smooth = 20f;
 
+    private float _moveHorizontalDirection = 1f;
+
     private Rigidbody2D _rigidbody;
+
+    public event Action<MoveDirection> Moved;
 
     private void Awake()
     {
@@ -34,5 +38,7 @@ public class Mover : MonoBehaviour
         {
             _moveHorizontalDirection = 1f;
         }
+
+        Moved?.Invoke(moveDirection);
     }
 }
