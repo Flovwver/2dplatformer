@@ -7,7 +7,7 @@ public class Jumper : MonoBehaviour
     [SerializeField] bool _isJumpStarted;
     [SerializeField] int _jumpCount = 0;
     [SerializeField] int _maxJumpCount = 1;
-    [SerializeField] private float _groundResetDelay = 0.1f;
+    [SerializeField] private float _groundResetDelay = 0.3f;
 
     [SerializeField] private float _groundResetTimer = 0f;
 

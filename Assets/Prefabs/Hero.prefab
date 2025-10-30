@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 3231405526072760581}
   - component: {fileID: 6316657070521829322}
   - component: {fileID: 1607471781129078252}
-  - component: {fileID: 7578446585387663484}
   - component: {fileID: 4538211083106042489}
   - component: {fileID: 940051486785979429}
   m_Layer: 0
@@ -260,25 +259,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _coyoteTime: 0.2
---- !u!114 &7578446585387663484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874143778130834290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 811442d1795035e4486ba1d6ff7efac9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxTrailLength: 2
-  _leftGroundChecker: {fileID: 4013542100879366265}
-  _rightGroundChecker: {fileID: 402189994374820848}
-  _groundDistance: 0.3
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &4538211083106042489
 MonoBehaviour:
   m_ObjectHideFlags: 0
