@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject _coinPrefab;
+    [SerializeField] private Coin _coinPrefab;
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private float _spawnInterval = 5f;
     [SerializeField] private bool isAllowSpawn = true;

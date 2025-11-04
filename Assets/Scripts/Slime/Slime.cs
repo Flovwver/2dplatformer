@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
-public class SlimeController : MonoBehaviour
+public class Slime : MonoBehaviour
 {
     [SerializeField] private Mover _mover;
     [SerializeField] private bool _isMove;
@@ -15,7 +15,7 @@ public class SlimeController : MonoBehaviour
 
     private IEnumerator Move()
     {
-        MoveDirection currentMoveDirection = MoveDirection.Right;
+        MoveDirection currentMoveDirection = MoveDirection.Left;
 
         while (_isMove)
         {

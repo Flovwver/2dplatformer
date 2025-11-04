@@ -5805,6 +5805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5109970247031109459, guid: 856bb64b0678d4343bcf8d6a75620657, type: 3}
+      propertyPath: _coinPrefab
+      value: 
+      objectReference: {fileID: 6907910516882639810, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
     - target: {fileID: 7280379765310899614, guid: 856bb64b0678d4343bcf8d6a75620657, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

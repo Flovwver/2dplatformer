@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
@@ -11,12 +10,12 @@ public class Mover : MonoBehaviour
     private float _moveHorizontalDirection = 1f;
 
     private Rigidbody2D _rigidbody;
-
-    public event Action<MoveDirection> Moved;
+    private MoveAnimator _moveAnimator;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _moveAnimator = GetComponent<MoveAnimator>();
     }
 
     private void FixedUpdate()
@@ -25,20 +24,13 @@ public class Mover : MonoBehaviour
 
         _rigidbody.linearVelocityX = Mathf.Lerp(_rigidbody.linearVelocityX, targetVelocityX, _smooth * Time.fixedDeltaTime);
 
+        _moveAnimator.Animate(_rigidbody.linearVelocityX);
+
         _moveHorizontalDirection = 0f;
     }
 
     public void Move(MoveDirection moveDirection)
     {
-        if (moveDirection == MoveDirection.Left)
-        {
-            _moveHorizontalDirection = -1f;
-        }
-        else if (moveDirection == MoveDirection.Right)
-        {
-            _moveHorizontalDirection = 1f;
-        }
-
-        Moved?.Invoke(moveDirection);
+        _moveHorizontalDirection = Mathf.Sign((int)moveDirection);
     }
 }

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1607471781129078252}
   - component: {fileID: 4538211083106042489}
   - component: {fileID: 940051486785979429}
+  - component: {fileID: 3467184203734628329}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -220,7 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpForce: 20
-  _collisionChecker: {fileID: 1607471781129078252}
   _isJumpStarted: 0
   _jumpCount: 0
   _maxJumpCount: 2
@@ -284,10 +284,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8612a25d9a0344a8f7bd1e1d93eab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 1197638128858944839}
-  _mover: {fileID: 6316657070521829322}
-  _spriteRenderer: {fileID: 7993536789694678359}
-  _collisionChecker: {fileID: 1607471781129078252}
+  _minVerticalVelocity: -5
+  _maxVerticalVelocity: 5
+--- !u!114 &3467184203734628329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874143778130834290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43e6b55074067b4fa049f517c331ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedThreshold: 10
 --- !u!1 &6147431952870233363
 GameObject:
   m_ObjectHideFlags: 0
