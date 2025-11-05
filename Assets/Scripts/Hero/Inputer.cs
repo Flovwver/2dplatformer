@@ -1,20 +1,21 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Inputer : MonoBehaviour
 {
-    [SerializeField] private Mover _mover;
-    [SerializeField] private Jumper _jumper;
+    public event Action<MoveDirection> MovePressed;
+    public event Action JumpPressed;
 
     private void Update()
     {
         if (Keyboard.current.leftArrowKey.isPressed)
-            _mover.Move(MoveDirection.Left);
+            MovePressed?.Invoke(MoveDirection.Left);
 
         if (Keyboard.current.rightArrowKey.isPressed)
-            _mover.Move(MoveDirection.Right);
+            MovePressed?.Invoke(MoveDirection.Right);
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            _jumper.StartJump();
+            JumpPressed?.Invoke();
     }
 }
