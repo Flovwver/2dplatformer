@@ -10,12 +10,12 @@ public class Mover : MonoBehaviour
     private float _moveHorizontalDirection = 1f;
 
     private Rigidbody2D _rigidbody;
-    private MoveAnimator _moveAnimator;
+
+    public float LinearVelocityX => _rigidbody.linearVelocityX;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _moveAnimator = GetComponent<MoveAnimator>();
     }
 
     private void FixedUpdate()
@@ -24,13 +24,11 @@ public class Mover : MonoBehaviour
 
         _rigidbody.linearVelocityX = Mathf.Lerp(_rigidbody.linearVelocityX, targetVelocityX, _smooth * Time.fixedDeltaTime);
 
-        _moveAnimator.Animate(_rigidbody.linearVelocityX);
-
         _moveHorizontalDirection = 0f;
     }
 
-    public void Move(MoveDirection moveDirection)
+    public void Move(float moveDirection)
     {
-        _moveHorizontalDirection = Mathf.Sign((int)moveDirection);
+        _moveHorizontalDirection = Mathf.Sign(moveDirection);
     }
 }

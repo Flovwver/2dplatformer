@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class MoveAnimatorData
+public static class SlimeAnimatorData
 {
     public static class Parameters
     {
@@ -9,7 +9,7 @@ public static class MoveAnimatorData
 }
 
 [RequireComponent(typeof(Animator))]
-public class MoveAnimator : MonoBehaviour
+public class SlimeAnimator : MonoBehaviour
 {
     [SerializeField] private float _speedThreshold = 10f;
     [SerializeField] private float _lastDirection = 1f;
@@ -21,7 +21,7 @@ public class MoveAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void Animate(float linearVelocityX)
+    public void AnimateMove(float linearVelocityX)
     {
         float speed = Mathf.Abs(linearVelocityX);
         float direction = _lastDirection;
@@ -58,6 +58,6 @@ public class MoveAnimator : MonoBehaviour
         else if (speed > _speedThreshold)
             speed = _speedThreshold;
 
-        _animator.SetFloat(MoveAnimatorData.Parameters.Speed, speed);
+        _animator.SetFloat(SlimeAnimatorData.Parameters.Speed, speed);
     }
 }

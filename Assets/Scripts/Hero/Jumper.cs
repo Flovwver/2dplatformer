@@ -1,24 +1,27 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CollisionChecker))]
 public class Jumper : MonoBehaviour
 {
     [SerializeField] private float _jumpForce = 12f;
-    [SerializeField] bool _isJumpStarted;
-    [SerializeField] int _jumpCount = 0;
-    [SerializeField] int _maxJumpCount = 1;
+    [SerializeField] private bool _isJumpStarted;
+    [SerializeField] private int _jumpCount = 0;
+    [SerializeField] private int _maxJumpCount = 1;
     [SerializeField] private float _groundResetDelay = 0.3f;
-
     [SerializeField] private float _groundResetTimer = 0f;
 
     private Rigidbody2D _rigidbody;
     private CollisionChecker _collisionChecker;
-    private JumpAnimator _jumpAnimator;
+
+    public float LinearVelocityY => _rigidbody.linearVelocityY;
+
+    public bool IsGrounded => _collisionChecker.IsGrounded;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _collisionChecker = GetComponent<CollisionChecker>();
-        _jumpAnimator = GetComponent<JumpAnimator>();
     }
 
     private void FixedUpdate()
@@ -37,8 +40,6 @@ public class Jumper : MonoBehaviour
             Jump();
             _isJumpStarted = false;
         }
-
-        _jumpAnimator.Animate(_rigidbody.linearVelocityY, isGrounded);
     }
 
     public void StartJump()

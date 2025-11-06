@@ -4,16 +4,17 @@ using UnityEngine.InputSystem;
 
 public class Inputer : MonoBehaviour
 {
-    public event Action<MoveDirection> MovePressed;
+    public event Action MoveLeftPressed;
+    public event Action MoveRightPressed;
     public event Action JumpPressed;
 
     private void Update()
     {
         if (Keyboard.current.leftArrowKey.isPressed)
-            MovePressed?.Invoke(MoveDirection.Left);
+            MoveLeftPressed?.Invoke();
 
         if (Keyboard.current.rightArrowKey.isPressed)
-            MovePressed?.Invoke(MoveDirection.Right);
+            MoveRightPressed?.Invoke();
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
             JumpPressed?.Invoke();
