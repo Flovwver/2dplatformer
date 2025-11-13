@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(HeroAnimator))]
 public class Hero : MonoBehaviour
 {
+    [SerializeField] private Attacker _attacker;
+
     private Inputer _inputer;
     private Mover _mover;
     private Jumper _jumper;
@@ -30,6 +32,7 @@ public class Hero : MonoBehaviour
         _inputer.MoveLeftPressed += OnMoveLeftPressed;
         _inputer.MoveRightPressed += OnMoveRightPressed;
         _inputer.JumpPressed += OnJumpPressed;
+        _inputer.AttackPressed += OnAttackPressed;
     }
 
     private void OnDisable()
@@ -37,6 +40,7 @@ public class Hero : MonoBehaviour
         _inputer.MoveLeftPressed -= OnMoveLeftPressed;
         _inputer.MoveRightPressed -= OnMoveRightPressed;
         _inputer.JumpPressed -= OnJumpPressed;
+        _inputer.AttackPressed -= OnAttackPressed;
     }
 
     private void OnMoveLeftPressed()
@@ -56,5 +60,10 @@ public class Hero : MonoBehaviour
     private void OnJumpPressed()
     {
         _jumper.StartJump();
+    }
+
+    private void OnAttackPressed()
+    {
+        _attacker.StartAttack();
     }
 }
