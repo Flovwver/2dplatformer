@@ -20,9 +20,9 @@ public class Attacker : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == _targetLayer 
+        if (((1 << collision.gameObject.layer) & _targetLayer.value) != 0
             && collision.gameObject.TryGetComponent<Health>(out var targetHealth))
         {
             targetHealth.TakeDamage(_damage);
