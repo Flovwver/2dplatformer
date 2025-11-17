@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class CoinSpawner : MonoBehaviour
+public class FirstAidKitSpawner : MonoBehaviour
 {
-    [SerializeField] private Coin _coinPrefab;
+    [SerializeField] private FirstAidKit _firstAidKitPrefab;
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private float _spawnInterval = 5f;
     [SerializeField] private bool isAllowSpawn = true;
@@ -29,6 +29,6 @@ public class CoinSpawner : MonoBehaviour
     {
         var spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
 
-        Instantiate(_coinPrefab, spawnPoint.position, Quaternion.identity);
+        Instantiate(_firstAidKitPrefab, spawnPoint.position, Quaternion.identity);
     }
 }

@@ -4,12 +4,16 @@ using UnityEngine;
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(HeroAnimator))]
+[RequireComponent(typeof(Health))]
 public class Hero : MonoBehaviour
 {
+    [SerializeField] private Attacker _attacker;
+
     private Inputer _inputer;
     private Mover _mover;
     private Jumper _jumper;
     private HeroAnimator _heroAnimator;
+    private Health _health;
 
     private void Awake()
     {
@@ -17,6 +21,7 @@ public class Hero : MonoBehaviour
         _mover = GetComponent<Mover>();
         _jumper = GetComponent<Jumper>();
         _heroAnimator = GetComponent<HeroAnimator>();
+        _health = GetComponent<Health>();
     }
 
     private void Update()
@@ -30,6 +35,8 @@ public class Hero : MonoBehaviour
         _inputer.MoveLeftPressed += OnMoveLeftPressed;
         _inputer.MoveRightPressed += OnMoveRightPressed;
         _inputer.JumpPressed += OnJumpPressed;
+        _inputer.AttackPressed += OnAttackPressed;
+        _health.Died += OnDied;
     }
 
     private void OnDisable()
@@ -37,6 +44,13 @@ public class Hero : MonoBehaviour
         _inputer.MoveLeftPressed -= OnMoveLeftPressed;
         _inputer.MoveRightPressed -= OnMoveRightPressed;
         _inputer.JumpPressed -= OnJumpPressed;
+        _inputer.AttackPressed -= OnAttackPressed;
+        _health.Died -= OnDied;
+    }
+
+    private void OnDied()
+    {
+        Destroy(gameObject);
     }
 
     private void OnMoveLeftPressed()
@@ -56,5 +70,10 @@ public class Hero : MonoBehaviour
     private void OnJumpPressed()
     {
         _jumper.StartJump();
+    }
+
+    private void OnAttackPressed()
+    {
+        _attacker.StartAttack();
     }
 }

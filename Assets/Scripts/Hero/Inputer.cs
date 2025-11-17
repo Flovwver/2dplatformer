@@ -7,6 +7,7 @@ public class Inputer : MonoBehaviour
     public event Action MoveLeftPressed;
     public event Action MoveRightPressed;
     public event Action JumpPressed;
+    public event Action AttackPressed;
 
     private void Update()
     {
@@ -18,5 +19,8 @@ public class Inputer : MonoBehaviour
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
             JumpPressed?.Invoke();
+
+        if (Keyboard.current.ctrlKey.wasPressedThisFrame)
+            AttackPressed?.Invoke();
     }
 }
