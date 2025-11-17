@@ -102,9 +102,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7280379765310899614}
-  - component: {fileID: 5109970247031109459}
+  - component: {fileID: 980927727371093184}
   m_Layer: 0
-  m_Name: CoinSpawner
+  m_Name: FirstAidKitSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ Transform:
   - {fileID: 6105133693968526309}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5109970247031109459
+--- !u!114 &980927727371093184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,16 +138,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3492395660628224035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c64e01c1ddc92c34f947c78fdb14771d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3111e96e6916bac4f94d1b6bd09ea2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
-  _spawnPoints:
-  - {fileID: 4453886090714147080}
-  - {fileID: 6064025056750752908}
-  - {fileID: 9091025930858914455}
-  - {fileID: 6105133693968526309}
-  _spawnInterval: 2
+  _firstAidKitPrefab: {fileID: 8854846834832231137, guid: 0ec7603cfa1602b4b947ffc32244e19f, type: 3}
+  _spawnPoints: []
+  _spawnInterval: 5
   isAllowSpawn: 1
 --- !u!1 &7207899911958765393
 GameObject:

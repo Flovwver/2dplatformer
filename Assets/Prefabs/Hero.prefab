@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 3231405526072760581}
   - component: {fileID: 6316657070521829322}
   - component: {fileID: 1607471781129078252}
-  - component: {fileID: 4538211083106042489}
   - component: {fileID: 466627205363351364}
+  - component: {fileID: 6960882693178482263}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a0fa165004e734792167188a766a2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attacker: {fileID: 0}
 --- !u!114 &3231405526072760581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,19 +270,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _coyoteTime: 0.2
---- !u!114 &4538211083106042489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874143778130834290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b322bdbee7c5ec4bb0a74055119b2f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CoinValue>k__BackingField: 0
 --- !u!114 &466627205363351364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,6 +286,20 @@ MonoBehaviour:
   _maxVerticalVelocity: 5
   _speedThreshold: 10
   _lastDirection: 1
+--- !u!114 &6960882693178482263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874143778130834290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f11ff807dc3f047a44f1c681befa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 0
+  _maxHealth: 0
 --- !u!1 &6147431952870233363
 GameObject:
   m_ObjectHideFlags: 0

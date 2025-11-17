@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -25,7 +24,7 @@ public class Attacker : MonoBehaviour
         if (((1 << collision.gameObject.layer) & _targetLayer.value) != 0
             && collision.gameObject.TryGetComponent<Health>(out var targetHealth))
         {
-            targetHealth.TakeDamage(_damage);
+            targetHealth.TakeDamage(_damage, transform.position);
         }
     }
 

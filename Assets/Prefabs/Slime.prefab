@@ -16,6 +16,10 @@ GameObject:
   - component: {fileID: 4761883229473623212}
   - component: {fileID: 3160759615312015588}
   - component: {fileID: 8253582873562864635}
+  - component: {fileID: 5310848107272399176}
+  - component: {fileID: 1495485045276243676}
+  - component: {fileID: 2680765585978972549}
+  - component: {fileID: 6091612386803413673}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -178,9 +182,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50812b0a50a4e3740b37edb9ceb35628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mover: {fileID: 4761883229473623212}
   _isMove: 1
   _moveTimeToSide: 2
+  _viewDistance: 10
+  _viewAngle: 30
+  _heroLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _hero: {fileID: 0}
+  _isChasing: 0
+  _minJumpDistance: 0
 --- !u!114 &4761883229473623212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,3 +241,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speedThreshold: 10
+  _lastDirection: 1
+--- !u!114 &5310848107272399176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541878598451288807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f11ff807dc3f047a44f1c681befa2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHealth: 0
+  _maxHealth: 0
+--- !u!114 &1495485045276243676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541878598451288807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccce8d3838eaa74592aefa61171d68d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leftGroundChecker: {fileID: 0}
+  _rightGroundChecker: {fileID: 0}
+  _groundDistance: 0.1
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _coyoteTime: 0.2
+--- !u!114 &2680765585978972549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541878598451288807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77482afff9f5ecc4d99d7aeaf1b07a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _jumpForce: 12
+  _isJumpStarted: 0
+  _jumpCount: 0
+  _maxJumpCount: 1
+  _groundResetDelay: 0.3
+  _groundResetTimer: 0
+--- !u!114 &6091612386803413673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541878598451288807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31561dabea90c348a7a79478da33fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 1
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 512

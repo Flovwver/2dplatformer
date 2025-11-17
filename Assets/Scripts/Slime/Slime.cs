@@ -11,6 +11,8 @@ public class Slime : MonoBehaviour
     [SerializeField] private bool _isMove;
     [SerializeField] private float _moveTimeToSide = 5f;
 
+    [SerializeField] private float _currentMoveDirection = -1f;
+
     [Header("Detection")]
     [SerializeField] private float _viewDistance = 10f;
     [SerializeField] private float _viewAngle = 30f;
@@ -82,23 +84,22 @@ public class Slime : MonoBehaviour
 
     private IEnumerator Patrol()
     {
-        float currentMoveDirection = -1f;
 
         while (_isMove)
         {
-            if (currentMoveDirection == -1f)
-                currentMoveDirection = 1f;
-            else
-                currentMoveDirection = -1f;
-
             for (float moveTimer = 0; moveTimer < _moveTimeToSide; moveTimer += Time.deltaTime)
             {
                 if (_isChasing)
                     yield break;
 
-                _mover.Move(currentMoveDirection);
+                _mover.Move(_currentMoveDirection);
                 yield return null;
             }
+
+            if (_currentMoveDirection == -1f)
+                _currentMoveDirection = 1f;
+            else
+                _currentMoveDirection = -1f;
         }
     }
 
