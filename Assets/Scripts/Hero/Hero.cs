@@ -37,6 +37,7 @@ public class Hero : MonoBehaviour
         _inputer.JumpPressed += OnJumpPressed;
         _inputer.AttackPressed += OnAttackPressed;
         _health.Died += OnDied;
+        _health.Damaged += OnDamaged;
     }
 
     private void OnDisable()
@@ -46,6 +47,14 @@ public class Hero : MonoBehaviour
         _inputer.JumpPressed -= OnJumpPressed;
         _inputer.AttackPressed -= OnAttackPressed;
         _health.Died -= OnDied;
+        _health.Damaged -= OnDamaged;
+    }
+
+    private void FixedUpdate()
+    {
+        _mover.Move();
+        _jumper.Jump();
+        _jumper.UpdateFields();
     }
 
     private void OnDied()
@@ -57,14 +66,14 @@ public class Hero : MonoBehaviour
     {
         float leftDirection = -1f;
 
-        _mover.Move(leftDirection);
+        _mover.StartMove(leftDirection);
     }
 
     private void OnMoveRightPressed()
     {
         float rightDirection = 1f;
 
-        _mover.Move(rightDirection);
+        _mover.StartMove(rightDirection);
     }
 
     private void OnJumpPressed()
@@ -75,5 +84,12 @@ public class Hero : MonoBehaviour
     private void OnAttackPressed()
     {
         _attacker.StartAttack();
+    }
+
+    private void OnDamaged(Vector2 source)
+    {
+        float damageForce = 5f;
+
+        _mover.Push(source, damageForce);
     }
 }

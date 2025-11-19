@@ -18,7 +18,7 @@ public class Mover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    public void Move()
     {
         float targetVelocityX = _moveHorizontalDirection * _speed;
 
@@ -27,8 +27,19 @@ public class Mover : MonoBehaviour
         _moveHorizontalDirection = 0f;
     }
 
-    public void Move(float moveDirection)
+    public void StartMove(float moveDirection)
     {
         _moveHorizontalDirection = Mathf.Sign(moveDirection);
+    }
+
+    public void Push(Vector2 source, float forceMagnitude)
+    {
+        Vector3 recoilAngel = new(0f, 0f, 45f);
+        Vector2 rawDirection = (Vector2)transform.position - source;
+        Vector2 horizontalDirection = new(Mathf.Sign(rawDirection.x), 0f);
+
+        Vector2 recoilDirection = Quaternion.Euler(Mathf.Sign(rawDirection.x) * recoilAngel) * horizontalDirection;
+
+        _rigidbody.linearVelocity += recoilDirection * forceMagnitude;
     }
 }

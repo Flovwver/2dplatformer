@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public static class HeroAnimatorData
-{
-    public static class Parameters
-    {
-        public static readonly int Speed = Animator.StringToHash(nameof(Speed));
-        public static readonly int VerticalVelocity = Animator.StringToHash(nameof(VerticalVelocity));
-        public static readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
-    }
-}
-
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Flipper))]
 public class HeroAnimator : MonoBehaviour
 {
     [SerializeField] private float _minVerticalVelocity = -5f;
@@ -19,10 +10,12 @@ public class HeroAnimator : MonoBehaviour
     [SerializeField] private float _lastDirection = 1f;
 
     private Animator _animator;
+    private Flipper _flipper;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _flipper = GetComponent<Flipper>();
     }
 
     public void AnimateJump(float verticalVelocityX, bool isGrounded)
@@ -43,7 +36,7 @@ public class HeroAnimator : MonoBehaviour
         }
 
         SetSpeed(speed);
-        Rotate(direction);
+        _flipper.Rotate(direction);
     }
 
     private void SetVerticalVelocity(float verticalVelocity)
@@ -56,21 +49,6 @@ public class HeroAnimator : MonoBehaviour
     private void SetIsGrounded(bool isGrounded)
     {
         _animator.SetBool(HeroAnimatorData.Parameters.IsGrounded, isGrounded);
-    }
-
-    private void Rotate(float moveDirection)
-    {
-        Quaternion leftDirtection = Quaternion.Euler(0f, 180f, 0f);
-        Quaternion rightDirtection = Quaternion.Euler(0f, 0f, 0f);
-
-        if (moveDirection < 0f)
-        {
-            transform.rotation = leftDirtection;
-        }
-        else if (moveDirection > 0f)
-        {
-            transform.rotation = rightDirtection;
-        }
     }
 
     private void SetSpeed(float speed)
