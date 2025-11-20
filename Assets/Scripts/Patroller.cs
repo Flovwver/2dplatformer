@@ -1,26 +1,36 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(Jumper))]
 public class Patroller : MonoBehaviour
 {
     [SerializeField] private bool _isMove;
+    [SerializeField] private bool _isChasing;
     [SerializeField] private float _viewDistance = 10f;
     [SerializeField] private float _viewAngle = 30f;
-    [SerializeField] private LayerMask _heroLayer;
-    [SerializeField] private Transform _hero;
-    [SerializeField] private bool _isChasing;
     [SerializeField] private float _minJumpDistance;
     [SerializeField] private float _moveTimeToSide = 5f;
     [SerializeField] private float _currentMoveDirection = -1f;
+    [SerializeField] private LayerMask _heroLayer;
+    [SerializeField] private Transform _hero;
 
     private Coroutine _patrolRoutine;
+    private Mover _mover;
+    private Jumper _jumper;
+
+    private void Awake()
+    {
+        _mover = GetComponent<Mover>();
+        _jumper = GetComponent<Jumper>();
+    }
 
     private void Start()
     {
         _patrolRoutine = StartCoroutine(Patrol());
     }
 
-    private void SelectMovingMode()
+    public void SelectMovingMode()
     {
         if (_hero == null)
             return;
@@ -51,7 +61,6 @@ public class Patroller : MonoBehaviour
 
     private IEnumerator Patrol()
     {
-
         while (_isMove)
         {
             for (float moveTimer = 0; moveTimer < _moveTimeToSide; moveTimer += Time.deltaTime)

@@ -1,18 +1,17 @@
-
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(SlimeAnimator))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Jumper))]
+[RequireComponent(typeof(Patroller))]
 public class Slime : MonoBehaviour
 {
-
     private Mover _mover;
     private SlimeAnimator _slimeAnimator;
     private Health _health;
     private Jumper _jumper;
-
+    private Patroller _patroller;
 
     private void Awake()
     {
@@ -20,14 +19,13 @@ public class Slime : MonoBehaviour
         _slimeAnimator = GetComponent<SlimeAnimator>();
         _health = GetComponent<Health>();
         _jumper = GetComponent<Jumper>();
+        _patroller = GetComponent<Patroller>();
     }
-
 
     private void Update()
     {
         _slimeAnimator.AnimateMove(_mover.LinearVelocityX);
-
-        
+        _patroller.SelectMovingMode();
     }
 
     private void FixedUpdate()

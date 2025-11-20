@@ -6040,6 +6040,22 @@ PrefabInstance:
       propertyPath: _rightGroundChecker
       value: 
       objectReference: {fileID: 110450294}
+    - target: {fileID: 3299305628279232590, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
+      propertyPath: _hero
+      value: 
+      objectReference: {fileID: 510686306}
+    - target: {fileID: 3299305628279232590, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
+      propertyPath: _isMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299305628279232590, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
+      propertyPath: _minJumpDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299305628279232590, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
+      propertyPath: _heroLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5310848107272399176, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
       propertyPath: _maxHealth
       value: 3
