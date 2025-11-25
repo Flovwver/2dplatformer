@@ -6,6 +6,8 @@ public class Inputer : MonoBehaviour
 {
     public event Action MoveLeftPressed;
     public event Action MoveRightPressed;
+    public event Action MoveLeftReleased;
+    public event Action MoveRightReleased;
     public event Action JumpPressed;
     public event Action AttackPressed;
 
@@ -16,6 +18,12 @@ public class Inputer : MonoBehaviour
 
         if (Keyboard.current.rightArrowKey.isPressed)
             MoveRightPressed?.Invoke();
+
+        if (Keyboard.current.leftArrowKey.wasReleasedThisFrame)
+            MoveLeftReleased?.Invoke();
+
+        if (Keyboard.current.rightArrowKey.wasReleasedThisFrame)
+            MoveRightReleased?.Invoke();
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
             JumpPressed?.Invoke();

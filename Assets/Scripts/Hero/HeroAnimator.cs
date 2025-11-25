@@ -24,19 +24,13 @@ public class HeroAnimator : MonoBehaviour
         SetIsGrounded(isGrounded);
     }
 
-    public void AnimateMove(float linearVelocityX)
+    public void AnimateMove(float direction, bool isRun)
     {
-        float speed = Mathf.Abs(linearVelocityX);
-        float direction = _lastDirection;
+        if (isRun)
+            _lastDirection = Mathf.Sign(direction);
 
-        if (speed > 1f)
-        {
-            direction = Mathf.Sign(linearVelocityX);
-            _lastDirection = direction;
-        }
-
-        SetSpeed(speed);
-        _flipper.Rotate(direction);
+        SetIsRun(isRun);
+        _flipper.Rotate(_lastDirection);
     }
 
     private void SetVerticalVelocity(float verticalVelocity)
@@ -51,13 +45,8 @@ public class HeroAnimator : MonoBehaviour
         _animator.SetBool(HeroAnimatorData.Parameters.IsGrounded, isGrounded);
     }
 
-    private void SetSpeed(float speed)
+    private void SetIsRun(bool isRun)
     {
-        if (speed < 0)
-            speed = 0;
-        else if (speed > _speedThreshold)
-            speed = _speedThreshold;
-
-        _animator.SetFloat(HeroAnimatorData.Parameters.Speed, speed);
+        _animator.SetBool(HeroAnimatorData.Parameters.IsRun, isRun);
     }
 }

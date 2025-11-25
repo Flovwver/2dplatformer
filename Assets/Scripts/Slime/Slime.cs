@@ -7,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Patroller))]
 public class Slime : MonoBehaviour
 {
+    [SerializeField] private float _lastDirection = -1f;
+
     private Mover _mover;
     private SlimeAnimator _slimeAnimator;
     private Health _health;
@@ -24,7 +26,7 @@ public class Slime : MonoBehaviour
 
     private void Update()
     {
-        _slimeAnimator.AnimateMove(_mover.LinearVelocityX);
+        AnimateMove();
         _patroller.SelectMovingMode();
     }
 
@@ -49,5 +51,18 @@ public class Slime : MonoBehaviour
     {
         StopAllCoroutines();
         Destroy(gameObject);
+    }
+
+    private void AnimateMove()
+    {
+        float direction = Mathf.Sign(_mover.LinearVelocityX);
+
+        if (Mathf.Abs(_mover.LinearVelocityX) > 1f)
+        {
+            if (_lastDirection != direction)
+                _slimeAnimator.AnimateMove(direction);
+
+            _lastDirection = direction;
+        }
     }
 }
