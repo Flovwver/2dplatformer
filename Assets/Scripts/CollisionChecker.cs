@@ -4,9 +4,9 @@ public class CollisionChecker : MonoBehaviour
 {
     [SerializeField] private Transform _leftGroundChecker;
     [SerializeField] private Transform _rightGroundChecker;
-    [SerializeField] private float _groundDistance = 0.1f;
+    [SerializeField] private float _groundDistance = 0.3f;
     [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private float _coyoteTime = 0.2f;
+    [SerializeField] private float _coyoteTime = 0.3f;
 
     private float _coyoteTimeCounter;
 

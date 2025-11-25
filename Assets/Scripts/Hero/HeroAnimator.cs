@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public static class HeroAnimatorData
-{
-    public static class Parameters
-    {
-        public static readonly int Speed = Animator.StringToHash(nameof(Speed));
-        public static readonly int VerticalVelocity = Animator.StringToHash(nameof(VerticalVelocity));
-        public static readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
-    }
-}
-
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Flipper))]
 public class HeroAnimator : MonoBehaviour
 {
     [SerializeField] private float _minVerticalVelocity = -5f;
@@ -19,10 +10,12 @@ public class HeroAnimator : MonoBehaviour
     [SerializeField] private float _lastDirection = 1f;
 
     private Animator _animator;
+    private Flipper _flipper;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _flipper = GetComponent<Flipper>();
     }
 
     public void AnimateJump(float verticalVelocityX, bool isGrounded)
@@ -31,19 +24,13 @@ public class HeroAnimator : MonoBehaviour
         SetIsGrounded(isGrounded);
     }
 
-    public void AnimateMove(float linearVelocityX)
+    public void AnimateMove(float direction, bool isRun)
     {
-        float speed = Mathf.Abs(linearVelocityX);
-        float direction = _lastDirection;
+        if (isRun)
+            _lastDirection = Mathf.Sign(direction);
 
-        if (speed > 1f)
-        {
-            direction = Mathf.Sign(linearVelocityX);
-            _lastDirection = direction;
-        }
-
-        SetSpeed(speed);
-        Rotate(direction);
+        SetIsRun(isRun);
+        _flipper.Rotate(_lastDirection);
     }
 
     private void SetVerticalVelocity(float verticalVelocity)
@@ -58,28 +45,8 @@ public class HeroAnimator : MonoBehaviour
         _animator.SetBool(HeroAnimatorData.Parameters.IsGrounded, isGrounded);
     }
 
-    private void Rotate(float moveDirection)
+    private void SetIsRun(bool isRun)
     {
-        Quaternion leftDirtection = Quaternion.Euler(0f, 180f, 0f);
-        Quaternion rightDirtection = Quaternion.Euler(0f, 0f, 0f);
-
-        if (moveDirection < 0f)
-        {
-            transform.rotation = leftDirtection;
-        }
-        else if (moveDirection > 0f)
-        {
-            transform.rotation = rightDirtection;
-        }
-    }
-
-    private void SetSpeed(float speed)
-    {
-        if (speed < 0)
-            speed = 0;
-        else if (speed > _speedThreshold)
-            speed = _speedThreshold;
-
-        _animator.SetFloat(HeroAnimatorData.Parameters.Speed, speed);
+        _animator.SetBool(HeroAnimatorData.Parameters.IsRun, isRun);
     }
 }

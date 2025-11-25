@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Inputer))]
@@ -8,6 +9,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [SerializeField] private Attacker _attacker;
+    [SerializeField] private bool _lastIsGrounded;
 
     private Inputer _inputer;
     private Mover _mover;
@@ -26,26 +28,38 @@ public class Hero : MonoBehaviour
 
     private void Update()
     {
-        _heroAnimator.AnimateMove(_mover.LinearVelocityX);
-        _heroAnimator.AnimateJump(_jumper.LinearVelocityY, _jumper.IsGrounded);
+        StartAnimateFall();
     }
 
     private void OnEnable()
     {
         _inputer.MoveLeftPressed += OnMoveLeftPressed;
         _inputer.MoveRightPressed += OnMoveRightPressed;
+        _inputer.MoveLeftReleased += OnMoveLeftReleased;
+        _inputer.MoveRightReleased += OnMoveRightReleased;
         _inputer.JumpPressed += OnJumpPressed;
         _inputer.AttackPressed += OnAttackPressed;
         _health.Died += OnDied;
+        _health.Damaged += OnDamaged;
     }
 
     private void OnDisable()
     {
         _inputer.MoveLeftPressed -= OnMoveLeftPressed;
         _inputer.MoveRightPressed -= OnMoveRightPressed;
+        _inputer.MoveLeftReleased -= OnMoveLeftReleased;
+        _inputer.MoveRightReleased -= OnMoveRightReleased;
         _inputer.JumpPressed -= OnJumpPressed;
         _inputer.AttackPressed -= OnAttackPressed;
         _health.Died -= OnDied;
+        _health.Damaged -= OnDamaged;
+    }
+
+    private void FixedUpdate()
+    {
+        _mover.Move();
+        _jumper.Jump();
+        _jumper.UpdateFields();
     }
 
     private void OnDied()
@@ -57,14 +71,26 @@ public class Hero : MonoBehaviour
     {
         float leftDirection = -1f;
 
-        _mover.Move(leftDirection);
+        _heroAnimator.AnimateMove(leftDirection, true);
+        _mover.StartMove(leftDirection);
     }
 
     private void OnMoveRightPressed()
     {
         float rightDirection = 1f;
 
-        _mover.Move(rightDirection);
+        _heroAnimator.AnimateMove(rightDirection, true);
+        _mover.StartMove(rightDirection);
+    }
+
+    private void OnMoveLeftReleased()
+    {
+        _heroAnimator.AnimateMove(0, false);
+    }
+
+    private void OnMoveRightReleased()
+    {
+        _heroAnimator.AnimateMove(0, false);
     }
 
     private void OnJumpPressed()
@@ -75,5 +101,37 @@ public class Hero : MonoBehaviour
     private void OnAttackPressed()
     {
         _attacker.StartAttack();
+    }
+
+    private void OnDamaged(Vector2 source)
+    {
+        float damageForce = 5f;
+
+        _mover.Push(source, damageForce);
+    }
+
+    private void StartAnimateFall()
+    {
+        bool isGrounded = _jumper.IsGrounded;
+
+        if (_lastIsGrounded != isGrounded && isGrounded == false)
+        {
+            _lastIsGrounded = _jumper.IsGrounded;
+            StartCoroutine(AnimateFall());
+        }
+
+        _lastIsGrounded = isGrounded;
+    }
+
+    private IEnumerator AnimateFall()
+    {
+        while(_jumper.IsGrounded == false)
+        {
+            _heroAnimator.AnimateJump(_jumper.LinearVelocityY, _jumper.IsGrounded);
+            yield return null;
+        }
+
+        _heroAnimator.AnimateJump(_jumper.LinearVelocityY, true);
+        _lastIsGrounded = true;
     }
 }

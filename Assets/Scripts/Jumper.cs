@@ -24,35 +24,33 @@ public class Jumper : MonoBehaviour
         _collisionChecker = GetComponent<CollisionChecker>();
     }
 
-    private void FixedUpdate()
-    {
-        bool isGrounded = _collisionChecker.IsGrounded;
-
-        if (_groundResetTimer > 0)
-            _groundResetTimer -= Time.fixedDeltaTime;
-
-        if (_groundResetTimer <= 0 && isGrounded)
-            _jumpCount = 0;
-
-        if (_isJumpStarted)
-        {
-            _groundResetTimer = _groundResetDelay;
-            Jump();
-            _isJumpStarted = false;
-        }
-    }
-
     public void StartJump()
     {
         _isJumpStarted = true;
     }
 
-    private void Jump()
+    public void Jump()
     {
-        if (_collisionChecker.IsGrounded || _jumpCount < _maxJumpCount)
+        if (_isJumpStarted)
         {
-            _rigidbody.linearVelocityY = _jumpForce;
-            _jumpCount++;
+            _groundResetTimer = _groundResetDelay;
+
+            if (_collisionChecker.IsGrounded || _jumpCount < _maxJumpCount)
+            {
+                _rigidbody.linearVelocityY = _jumpForce;
+                _jumpCount++;
+            }
+
+            _isJumpStarted = false;
         }
+    }
+
+    public void UpdateFields()
+    {
+        if (_groundResetTimer > 0)
+            _groundResetTimer -= Time.fixedDeltaTime;
+
+        if (_groundResetTimer <= 0 && _collisionChecker.IsGrounded)
+            _jumpCount = 0;
     }
 }
