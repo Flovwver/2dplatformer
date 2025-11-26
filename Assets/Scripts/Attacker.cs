@@ -1,48 +1,21 @@
-using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Collider2D))]
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] private int _damage = 1;
-    [SerializeField] private LayerMask _targetLayer;
-    [SerializeField] private float _attackTime = 0.1f;
+    [SerializeField] private int _damage;
+    [SerializeField] private Collider2D _attackCollider;
+    [SerializeField] private ContactFilter2D _filter;
 
-    private Coroutine _attackCoroutine;
-    private SpriteRenderer _spriteRenderer;
-    private Collider2D _collider;
+    private readonly Collider2D[] _hits = new Collider2D[16];
 
-    private void Awake()
+    public void Attack()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<Collider2D>();
-    }
+        int count = Physics2D.OverlapCollider(_attackCollider, _filter, _hits);
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (((1 << collision.gameObject.layer) & _targetLayer.value) != 0
-            && collision.gameObject.TryGetComponent<Health>(out var targetHealth))
+        for (int i = 0; i < count; i++)
         {
-            targetHealth.TakeDamage(_damage, transform.position);
+            if (_hits[i].TryGetComponent(out Health health))
+                health.TakeDamage(_damage, transform.position);
         }
-    }
-
-    public void StartAttack()
-    {
-        _attackCoroutine ??= StartCoroutine(Attack());
-    }
-
-    private IEnumerator Attack()
-    {
-        _spriteRenderer.enabled = true;
-        _collider.enabled = true;
-
-        yield return new WaitForSeconds(_attackTime);
-
-        _spriteRenderer.enabled = false;
-        _collider.enabled = false;
-
-        _attackCoroutine = null;
     }
 }

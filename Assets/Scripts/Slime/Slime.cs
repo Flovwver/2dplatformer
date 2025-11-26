@@ -1,40 +1,26 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
 [RequireComponent(typeof(SlimeAnimator))]
 [RequireComponent(typeof(Health))]
-[RequireComponent(typeof(Jumper))]
-[RequireComponent(typeof(Patroller))]
+[RequireComponent(typeof(Mover))]
 public class Slime : MonoBehaviour
 {
     [SerializeField] private float _lastDirection = -1f;
+    [SerializeField] private Patroller _patroller;
+    [SerializeField] private Chaser _chaser;
 
-    private Mover _mover;
     private SlimeAnimator _slimeAnimator;
     private Health _health;
-    private Jumper _jumper;
-    private Patroller _patroller;
+    private Mover _mover;
+    private IMovementState _movementState;
 
     private void Awake()
     {
-        _mover = GetComponent<Mover>();
         _slimeAnimator = GetComponent<SlimeAnimator>();
         _health = GetComponent<Health>();
-        _jumper = GetComponent<Jumper>();
-        _patroller = GetComponent<Patroller>();
-    }
+        _mover = GetComponent<Mover>();
 
-    private void Update()
-    {
-        AnimateMove();
-        _patroller.SelectMovingMode();
-    }
-
-    private void FixedUpdate()
-    {
-        _mover.Move();
-        _jumper.Jump();
-        _jumper.UpdateFields();
+        _movementState = _patroller;
     }
 
     private void OnEnable()
@@ -45,6 +31,31 @@ public class Slime : MonoBehaviour
     private void OnDisable()
     {
         _health.Died -= OnDied;
+    }
+
+    private void FixedUpdate()
+    {
+        AnimateMove();
+        ChoseMovementState();
+        MoveToTarget();
+    }
+
+    private void ChoseMovementState()
+    {
+        if (_chaser.IsPlayerInChaseRange())
+            _movementState = _chaser;
+        else
+            _movementState = _patroller;
+    }
+
+    private void MoveToTarget()
+    {
+        Vector2 direction = _movementState.GetDirection();
+
+        _mover.Move(Mathf.Sign(direction.x));
+
+        if(direction.y > 0)
+            _mover.Jump();
     }
 
     private void OnDied()

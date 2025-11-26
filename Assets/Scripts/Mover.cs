@@ -1,45 +1,45 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _smooth = 20f;
-
-    private float _moveHorizontalDirection = 1f;
+    [SerializeField] private float _speedHorizontal = 5f;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _knockbackForce;
 
     private Rigidbody2D _rigidbody;
 
     public float LinearVelocityX => _rigidbody.linearVelocityX;
+    public float LinearVelocityY => _rigidbody.linearVelocityY;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void Move()
+    public void Jump()
     {
-        float targetVelocityX = _moveHorizontalDirection * _speed;
-
-        _rigidbody.linearVelocityX = Mathf.Lerp(_rigidbody.linearVelocityX, targetVelocityX, _smooth * Time.fixedDeltaTime);
-
-        _moveHorizontalDirection = 0f;
+        _rigidbody.linearVelocityY += _jumpForce;
     }
 
-    public void StartMove(float moveDirection)
+    public void Move(float direction)
     {
-        _moveHorizontalDirection = Mathf.Sign(moveDirection);
+        if (direction == 0f)
+            return;
+        else
+            direction = Mathf.Sign(direction);
+
+        _rigidbody.linearVelocityX = _speedHorizontal * direction * Time.fixedDeltaTime;
     }
 
-    public void Push(Vector2 source, float forceMagnitude)
+    public void Knockback(Vector2 source)
     {
-        Vector3 recoilAngel = new(0f, 0f, 45f);
-        Vector2 rawDirection = (Vector2)transform.position - source;
-        Vector2 horizontalDirection = new(Mathf.Sign(rawDirection.x), 0f);
+        Vector3 angel = new(0f, 0f, 45f);
+        Vector2 directionToSource = (Vector2)transform.position - source;
+        Vector2 horizontalDirection = new(Mathf.Sign(directionToSource.x), 0f);
+        
+        Vector2 direction = Quaternion.Euler(Mathf.Sign(directionToSource.x) * angel) * horizontalDirection;
 
-        Vector2 recoilDirection = Quaternion.Euler(Mathf.Sign(rawDirection.x) * recoilAngel) * horizontalDirection;
-
-        _rigidbody.linearVelocity += recoilDirection * forceMagnitude;
+        _rigidbody.linearVelocity += direction * _knockbackForce;
     }
 }
