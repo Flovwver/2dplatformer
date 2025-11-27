@@ -70,14 +70,18 @@ public class Hero : MonoBehaviour
 
     private IEnumerator AnimateFall()
     {
-        bool isGrounded = _groundDetector.IsGrounded();
+        bool isGrounded = false;
 
-        while (isGrounded == false)
+        _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
+        yield return new WaitForSeconds(_groundedWaitTime);
+
+        while (isGrounded == false) 
         {
             _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
             yield return null;
-         
+
             isGrounded = _groundDetector.IsGrounded();
+
         }
 
         _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
