@@ -70,7 +70,6 @@ public class Slime : MonoBehaviour
             _jumpCooldownTimer = _jumpCooldown;
 
             _mover.Jump();
-            Debug.Log("jump");
         }
     }
 

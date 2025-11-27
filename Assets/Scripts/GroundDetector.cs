@@ -31,15 +31,4 @@ public class GroundDetector : MonoBehaviour
 
         return Physics2D.OverlapArea(bottomLeft, topRight, _groundMask);
     }
-
-    private void OnDrawGizmos()
-    {
-        Vector2 bottomLeft = (Vector2)transform.position + _offsetBottomLeft;
-        Vector2 topRight = (Vector2)transform.position + _offsetTopRight;
-        Vector2 size = topRight - bottomLeft;
-        Vector2 center = bottomLeft + size * 0.5f;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(center, size);
-    }
 }
