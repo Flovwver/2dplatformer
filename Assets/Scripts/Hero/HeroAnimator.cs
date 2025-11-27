@@ -33,6 +33,11 @@ public class HeroAnimator : MonoBehaviour
         _flipper.Rotate(_lastDirection);
     }
 
+    public void AnimateAtack()
+    {
+        _animator.SetTrigger(HeroAnimatorData.Parameters.Attack);
+    }
+
     private void SetVerticalVelocity(float verticalVelocity)
     {
         float clampedVelocity = Mathf.Clamp(verticalVelocity, _minVerticalVelocity, _maxVerticalVelocity);

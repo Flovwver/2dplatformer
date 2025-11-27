@@ -3,63 +3,59 @@ using UnityEngine;
 
 [RequireComponent(typeof(Inputer))]
 [RequireComponent(typeof(Mover))]
-[RequireComponent(typeof(Jumper))]
 [RequireComponent(typeof(HeroAnimator))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(GroundDetector))]
+[RequireComponent(typeof(Attacker))]
 public class Hero : MonoBehaviour
 {
-    [SerializeField] private Attacker _attacker;
-    [SerializeField] private bool _lastIsGrounded;
+    [SerializeField] private float _groundedWaitTime = 0.3f;
 
     private Inputer _inputer;
     private Mover _mover;
-    private Jumper _jumper;
     private HeroAnimator _heroAnimator;
     private Health _health;
+    private GroundDetector _groundDetector;
+    private Attacker _attacker;
 
     private void Awake()
     {
         _inputer = GetComponent<Inputer>();
         _mover = GetComponent<Mover>();
-        _jumper = GetComponent<Jumper>();
         _heroAnimator = GetComponent<HeroAnimator>();
         _health = GetComponent<Health>();
-    }
-
-    private void Update()
-    {
-        StartAnimateFall();
+        _groundDetector = GetComponent<GroundDetector>();
+        _attacker = GetComponent<Attacker>();
     }
 
     private void OnEnable()
     {
-        _inputer.MoveLeftPressed += OnMoveLeftPressed;
-        _inputer.MoveRightPressed += OnMoveRightPressed;
-        _inputer.MoveLeftReleased += OnMoveLeftReleased;
-        _inputer.MoveRightReleased += OnMoveRightReleased;
-        _inputer.JumpPressed += OnJumpPressed;
-        _inputer.AttackPressed += OnAttackPressed;
         _health.Died += OnDied;
         _health.Damaged += OnDamaged;
     }
 
     private void OnDisable()
     {
-        _inputer.MoveLeftPressed -= OnMoveLeftPressed;
-        _inputer.MoveRightPressed -= OnMoveRightPressed;
-        _inputer.MoveLeftReleased -= OnMoveLeftReleased;
-        _inputer.MoveRightReleased -= OnMoveRightReleased;
-        _inputer.JumpPressed -= OnJumpPressed;
-        _inputer.AttackPressed -= OnAttackPressed;
         _health.Died -= OnDied;
         _health.Damaged -= OnDamaged;
     }
 
     private void FixedUpdate()
     {
-        _mover.Move();
-        _jumper.Jump();
-        _jumper.UpdateFields();
+        if (_inputer.GetIsJump() && _groundDetector.IsGrounded())
+        {
+            _mover.Jump();
+            StartCoroutine(AnimateFall());
+        }
+
+        if (_inputer.GetIsAttack())
+        {
+            _attacker.Attack();
+            _heroAnimator.AnimateAtack();
+        }
+
+        _heroAnimator.AnimateMove(_inputer.Direction, _inputer.Direction != 0);
+        _mover.Move(_inputer.Direction);
     }
 
     private void OnDied()
@@ -67,71 +63,23 @@ public class Hero : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnMoveLeftPressed()
-    {
-        float leftDirection = -1f;
-
-        _heroAnimator.AnimateMove(leftDirection, true);
-        _mover.StartMove(leftDirection);
-    }
-
-    private void OnMoveRightPressed()
-    {
-        float rightDirection = 1f;
-
-        _heroAnimator.AnimateMove(rightDirection, true);
-        _mover.StartMove(rightDirection);
-    }
-
-    private void OnMoveLeftReleased()
-    {
-        _heroAnimator.AnimateMove(0, false);
-    }
-
-    private void OnMoveRightReleased()
-    {
-        _heroAnimator.AnimateMove(0, false);
-    }
-
-    private void OnJumpPressed()
-    {
-        _jumper.StartJump();
-    }
-
-    private void OnAttackPressed()
-    {
-        _attacker.StartAttack();
-    }
-
     private void OnDamaged(Vector2 source)
     {
-        float damageForce = 5f;
-
-        _mover.Push(source, damageForce);
-    }
-
-    private void StartAnimateFall()
-    {
-        bool isGrounded = _jumper.IsGrounded;
-
-        if (_lastIsGrounded != isGrounded && isGrounded == false)
-        {
-            _lastIsGrounded = _jumper.IsGrounded;
-            StartCoroutine(AnimateFall());
-        }
-
-        _lastIsGrounded = isGrounded;
+        _mover.Knockback(source);
     }
 
     private IEnumerator AnimateFall()
     {
-        while(_jumper.IsGrounded == false)
+        bool isGrounded = _groundDetector.IsGrounded();
+
+        while (isGrounded == false)
         {
-            _heroAnimator.AnimateJump(_jumper.LinearVelocityY, _jumper.IsGrounded);
+            _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
             yield return null;
+         
+            isGrounded = _groundDetector.IsGrounded();
         }
 
-        _heroAnimator.AnimateJump(_jumper.LinearVelocityY, true);
-        _lastIsGrounded = true;
+        _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
     }
 }

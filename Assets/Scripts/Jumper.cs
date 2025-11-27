@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CollisionChecker))]
+[RequireComponent(typeof(GroundDetector))]
 public class Jumper : MonoBehaviour
 {
     [SerializeField] private float _jumpForce = 12f;
@@ -12,16 +12,16 @@ public class Jumper : MonoBehaviour
     [SerializeField] private float _groundResetTimer = 0f;
 
     private Rigidbody2D _rigidbody;
-    private CollisionChecker _collisionChecker;
+    private GroundDetector _collisionChecker;
 
     public float LinearVelocityY => _rigidbody.linearVelocityY;
 
-    public bool IsGrounded => _collisionChecker.IsGrounded;
+    public bool IsGrounded => _collisionChecker.IsGrounded();
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _collisionChecker = GetComponent<CollisionChecker>();
+        _collisionChecker = GetComponent<GroundDetector>();
     }
 
     public void StartJump()
@@ -35,7 +35,7 @@ public class Jumper : MonoBehaviour
         {
             _groundResetTimer = _groundResetDelay;
 
-            if (_collisionChecker.IsGrounded || _jumpCount < _maxJumpCount)
+            if (_collisionChecker.IsGrounded() || _jumpCount < _maxJumpCount)
             {
                 _rigidbody.linearVelocityY = _jumpForce;
                 _jumpCount++;
@@ -50,7 +50,7 @@ public class Jumper : MonoBehaviour
         if (_groundResetTimer > 0)
             _groundResetTimer -= Time.fixedDeltaTime;
 
-        if (_groundResetTimer <= 0 && _collisionChecker.IsGrounded)
+        if (_groundResetTimer <= 0 && _collisionChecker.IsGrounded())
             _jumpCount = 0;
     }
 }

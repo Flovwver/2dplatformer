@@ -4,31 +4,32 @@ using UnityEngine.InputSystem;
 
 public class Inputer : MonoBehaviour
 {
-    public event Action MoveLeftPressed;
-    public event Action MoveRightPressed;
-    public event Action MoveLeftReleased;
-    public event Action MoveRightReleased;
-    public event Action JumpPressed;
-    public event Action AttackPressed;
+    public const string Horizontal = "Horizontal";
+
+    private bool _isJump;
+    private bool _isAttack;
+
+    public float Direction { get; private set; }
 
     private void Update()
     {
-        if (Keyboard.current.leftArrowKey.isPressed)
-            MoveLeftPressed?.Invoke();
+        Direction = Input.GetAxis(Horizontal);
 
-        if (Keyboard.current.rightArrowKey.isPressed)
-            MoveRightPressed?.Invoke();
+        if (Input.GetKeyDown(KeyCode.Space))
+            _isJump = true;
 
-        if (Keyboard.current.leftArrowKey.wasReleasedThisFrame)
-            MoveLeftReleased?.Invoke();
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            _isAttack = true;
+    }
 
-        if (Keyboard.current.rightArrowKey.wasReleasedThisFrame)
-            MoveRightReleased?.Invoke();
+    public bool GetIsJump() => GetBoolAsTrigger(ref _isJump);
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            JumpPressed?.Invoke();
+    public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
 
-        if (Keyboard.current.ctrlKey.wasPressedThisFrame)
-            AttackPressed?.Invoke();
+    private bool GetBoolAsTrigger(ref bool value)
+    {
+        bool localValue = value;
+        value = false;
+        return localValue;
     }
 }
