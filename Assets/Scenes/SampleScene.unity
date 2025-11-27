@@ -6164,7 +6164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4761883229473623212, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
       propertyPath: _jumpForce
-      value: 12
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4761883229473623212, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
       propertyPath: _knockbackForce
@@ -6172,7 +6172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4761883229473623212, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
       propertyPath: _speedHorizontal
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5310848107272399176, guid: 5fcd1cbe49d4e554b9eb31a60e70ce2c, type: 3}
       propertyPath: _maxHealth
@@ -6314,7 +6314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1607471781129078252, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _offsetTopRight.x
-      value: 0.39
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 1607471781129078252, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _offsetTopRight.y
@@ -6322,7 +6322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1607471781129078252, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _offsetBottomLeft.x
-      value: -0.13
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 1607471781129078252, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _offsetBottomLeft.y
@@ -6390,7 +6390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6316657070521829322, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _jumpForce
-      value: 12
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6316657070521829322, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _knockbackForce
@@ -6398,7 +6398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6316657070521829322, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _speedHorizontal
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6960882693178482263, guid: aa620d648519ea44ead09ae4e2a5d1c4, type: 3}
       propertyPath: _maxHealth

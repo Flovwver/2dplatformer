@@ -9,7 +9,6 @@ using UnityEngine;
 [RequireComponent(typeof(Attacker))]
 public class Hero : MonoBehaviour
 {
-    [SerializeField] private bool _lastIsGrounded;
     [SerializeField] private float _groundedWaitTime = 0.3f;
 
     private Inputer _inputer;
@@ -41,16 +40,21 @@ public class Hero : MonoBehaviour
         _health.Damaged -= OnDamaged;
     }
 
-    private void Update()
-    {
-        StartAnimateFall();
-    }
-
     private void FixedUpdate()
     {
         if (_inputer.GetIsJump() && _groundDetector.IsGrounded())
+        {
             _mover.Jump();
+            StartCoroutine(AnimateFall());
+        }
 
+        if (_inputer.GetIsAttack())
+        {
+            _attacker.Attack();
+            _heroAnimator.AnimateAtack();
+        }
+
+        _heroAnimator.AnimateMove(_inputer.Direction, _inputer.Direction != 0);
         _mover.Move(_inputer.Direction);
     }
 
@@ -64,28 +68,18 @@ public class Hero : MonoBehaviour
         _mover.Knockback(source);
     }
 
-    private void StartAnimateFall()
+    private IEnumerator AnimateFall()
     {
         bool isGrounded = _groundDetector.IsGrounded();
 
-        if (_lastIsGrounded != isGrounded && isGrounded == false)
+        while (isGrounded == false)
         {
-            _lastIsGrounded = _groundDetector.IsGrounded();
-            StartCoroutine(AnimateFall());
-        }
-
-        _lastIsGrounded = isGrounded;
-    }
-
-    private IEnumerator AnimateFall()
-    {
-        while(_groundDetector.IsGrounded() == false)
-        {
-            _heroAnimator.AnimateJump(_mover.LinearVelocityY, _groundDetector.IsGrounded());
+            _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
             yield return null;
+         
+            isGrounded = _groundDetector.IsGrounded();
         }
 
-        _heroAnimator.AnimateJump(_mover.LinearVelocityY, true);
-        _lastIsGrounded = true;
+        _heroAnimator.AnimateJump(_mover.LinearVelocityY, isGrounded);
     }
 }
