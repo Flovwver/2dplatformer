@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(HeroAnimator))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(GroundDetector))]
+[RequireComponent(typeof(Attacker))]
 public class Hero : MonoBehaviour
 {
-    [SerializeField] private Attacker _attacker;
     [SerializeField] private bool _lastIsGrounded;
     [SerializeField] private float _groundedWaitTime = 0.3f;
 
@@ -17,6 +17,7 @@ public class Hero : MonoBehaviour
     private HeroAnimator _heroAnimator;
     private Health _health;
     private GroundDetector _groundDetector;
+    private Attacker _attacker;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class Hero : MonoBehaviour
         _heroAnimator = GetComponent<HeroAnimator>();
         _health = GetComponent<Health>();
         _groundDetector = GetComponent<GroundDetector>();
+        _attacker = GetComponent<Attacker>();
     }
 
     private void OnEnable()

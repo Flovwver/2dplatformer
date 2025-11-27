@@ -8,7 +8,7 @@ public class Chaser : MonoBehaviour, IMovementState
 
     public Vector2 GetDirection()
     {
-        Vector2 direction = (Vector2)transform.position - (Vector2)_playerPosition.position;
+        Vector2 direction = (Vector2)_playerPosition.position - (Vector2)transform.position;
 
         direction.Normalize();
 

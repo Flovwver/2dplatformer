@@ -29,7 +29,7 @@ public class Mover : MonoBehaviour
         else
             direction = Mathf.Sign(direction);
 
-        _rigidbody.linearVelocityX = _speedHorizontal * direction * Time.fixedDeltaTime;
+        _rigidbody.linearVelocityX = _speedHorizontal * direction;
     }
 
     public void Knockback(Vector2 source)
