@@ -6,7 +6,6 @@ public class HeroAnimator : MonoBehaviour
 {
     [SerializeField] private float _minVerticalVelocity = -5f;
     [SerializeField] private float _maxVerticalVelocity = 5f;
-    [SerializeField] private float _speedThreshold = 10f;
     [SerializeField] private float _lastDirection = 1f;
 
     private Animator _animator;

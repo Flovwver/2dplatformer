@@ -10,16 +10,17 @@ public class Health : MonoBehaviour
     public event Action Died;
     public event Action<Vector2> Damaged;
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    public bool TryHeal(int healAmount)
     {
-        if (collider.gameObject.TryGetComponent<FirstAidKit>(out var firstAidKit))
+        if (_currentHealth < _maxHealth)
         {
-            if (_currentHealth < _maxHealth)
-            {
-                Destroy(collider.gameObject);
-                _currentHealth += firstAidKit.HealAmount;
-            }
+            if (_currentHealth + healAmount > _maxHealth)
+                _currentHealth = _maxHealth;
+            else
+                _currentHealth += healAmount;
         }
+
+        return _currentHealth < _maxHealth;
     }
 
     public void TakeDamage(int damage, Vector2 damageSource)
