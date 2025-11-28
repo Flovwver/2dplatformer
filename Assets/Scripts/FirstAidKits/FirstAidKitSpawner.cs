@@ -7,7 +7,7 @@ public class FirstAidKitSpawner : MonoBehaviour
     [SerializeField] private FirstAidKit _firstAidKitPrefab;
     [SerializeField] private List<Transform> _spawnPoints;
     [SerializeField] private float _spawnInterval = 5f;
-    [SerializeField] private bool isAllowSpawn = true;
+    [SerializeField] private bool _isAllowSpawn = true;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class FirstAidKitSpawner : MonoBehaviour
     {
         var wait = new WaitForSeconds(_spawnInterval);
 
-        while (isAllowSpawn)
+        while (_isAllowSpawn)
         {
             Spawn();
             yield return wait;
