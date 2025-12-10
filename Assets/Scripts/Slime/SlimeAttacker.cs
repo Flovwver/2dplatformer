@@ -11,7 +11,7 @@ public class SlimeAttacker : MonoBehaviour
         if (((1 << collision.gameObject.layer) & _targetLayer.value) != 0
             && collision.gameObject.TryGetComponent<Health>(out var targetHealth))
         {
-            targetHealth.TakeDamage(_damage, transform.position);
+            targetHealth.TakeDamage(_damage);
         }
     }
 }
