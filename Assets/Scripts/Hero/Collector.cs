@@ -30,9 +30,8 @@ public class Collector : MonoBehaviour, ICollector
 
     public void Visit(FirstAidKit kit)
     {
-        if (_health.TryHeal(kit.HealAmount))
-        {
-            Destroy(kit.gameObject);
-        }
+        _health.TakeHeal(kit.HealAmount);
+
+        Destroy(kit.gameObject);
     }
 }

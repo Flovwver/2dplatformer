@@ -15,7 +15,7 @@ public class Attacker : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             if (_hits[i].TryGetComponent(out Health health))
-                health.TakeDamage(_damage, transform.position);
+                health.TakeDamage(_damage);
         }
     }
 }
