@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Inputer : MonoBehaviour
 {
@@ -8,6 +6,7 @@ public class Inputer : MonoBehaviour
 
     private bool _isJump;
     private bool _isAttack;
+    private bool _isAbilityActive;
 
     public float Direction { get; private set; }
 
@@ -20,11 +19,16 @@ public class Inputer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
             _isAttack = true;
+
+        if (Input.GetKeyDown(KeyCode.V))
+            _isAbilityActive = true;
     }
 
     public bool GetIsJump() => GetBoolAsTrigger(ref _isJump);
 
     public bool GetIsAttack() => GetBoolAsTrigger(ref _isAttack);
+
+    public bool GetIsAbilityActive() => GetBoolAsTrigger(ref _isAbilityActive);
 
     private bool GetBoolAsTrigger(ref bool value)
     {

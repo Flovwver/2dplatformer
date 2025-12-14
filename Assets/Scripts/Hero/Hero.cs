@@ -10,6 +10,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     [SerializeField] private float _groundedWaitTime = 0.3f;
+    [SerializeField] private VampiricAura _vampiricAura;
 
     private Inputer _inputer;
     private Mover _mover;
@@ -38,6 +39,14 @@ public class Hero : MonoBehaviour
     {
         _health.Died -= OnDied;
         _health.Damaged -= OnDamaged;
+    }
+
+    private void Update()
+    {
+        if (_inputer.GetIsAbilityActive())
+        {
+            _vampiricAura.Activate();
+        }
     }
 
     private void FixedUpdate()
